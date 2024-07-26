@@ -61,9 +61,9 @@ class Api {
         ];
         foreach ($allVariations as $variation) {
 
-            $size = $this->getSize($variation);
-            $variantSKU = $this->createVariantSKU($size,$parentSKU);
-            $recipeID = $this->createRecipeID($productType,$size,$manuColor);
+            $size = $this->getVariationSize($variation);
+            $variantSKU = $this->createVariationSKU($size,$parentSKU);
+            $recipeID = $this->createVariationRecipeID($productType,$size,$manuColor);
             $updatedVariation = [
                 'id' => $variation->id,
                 'sku' => $variantSKU,
@@ -82,16 +82,16 @@ class Api {
         return $updatedVariation;
     }
 
-    public function createVariantSKU($size,$parentSKU):string {
+    public function createVariationSKU($size,$parentSKU):string {
         return $parentSKU . '-' .$size;
     }
-    public function createRecipeID($productType,$size,$manuColor):string {
+    public function createVariationRecipeID($productType,$size,$manuColor):string {
         $manuColor = str_replace(" ", "-", $manuColor);
         return strtolower($productType . '_' .$size. '_' . $manuColor);
     }
 
 
-    public function getSize($variation) {
+    public function getVariationSize($variation) {
 
         $attributes = $variation->attributes;
         foreach ($attributes as $attribute) {

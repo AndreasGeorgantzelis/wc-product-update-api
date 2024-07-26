@@ -1,9 +1,7 @@
 <?php
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Service\Service\Api;
 use Slim\Factory\AppFactory;
-use Service\Api;
 
 require __DIR__ . '/../vendor/autoload.php';
 

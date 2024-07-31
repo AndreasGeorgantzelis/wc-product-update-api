@@ -13,8 +13,10 @@ $app = AppFactory::create();
 $api = new \Service\Api();
 
 $app->get('/', function ($request, $response, $args) {
-
-    $response->getBody()->write('hello world');
+    $api = new \Service\Api();
+    $update = new UpdateCategories($api);
+    $results = $update->getProducts();
+    $response->getBody()->write(json_encode($results));
     return $response->withHeader('Content-Type', 'application/json');
 
 });

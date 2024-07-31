@@ -33,9 +33,7 @@ class UpdateCategories
  public function getProducts() {
         return $this->api->getApi('products/?&after=2024-07-07T00:00:00&page=' . 4 . '&per_page=50&tag=1700');
  }
-// public function getCategories() {
-//       return $this->api->getApi('products/categories/1702');
-// }
+
 
 }
 //Lucazz category id : 1702

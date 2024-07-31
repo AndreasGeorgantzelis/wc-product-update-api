@@ -17,9 +17,7 @@ class UpdateCategories
      $allProducts = $this->getProducts();
      foreach ($allProducts as $product) {
          $newCategory = new \stdClass();
-         $newCategory->id = 1702;
-         $newCategory->name = 'Lucazz';
-         $newCategory->slug = 'Lucazz';
+         $newCategory->id = 1704;
          $product->categories[] = $newCategory;
 
          $updatedProduct = [
@@ -33,7 +31,7 @@ class UpdateCategories
      return $allUpdatedProducts;
  }
  public function getProducts() {
-        return $this->api->getApi('products/?&after=2024-07-07T00:00:00&page=' . 1 . '&per_page=2&tag=1698');
+        return $this->api->getApi('products/?&after=2024-07-07T00:00:00&page=' . 2 . '&per_page=50&tag=1701');
  }
 // public function getCategories() {
 //       return $this->api->getApi('products/categories/1702');

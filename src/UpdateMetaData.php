@@ -5,17 +5,9 @@ namespace Service;
 use Automattic\WooCommerce\Client;
 
 class UpdateMetaData {
-    private $woocommerce;
-    public function __construct() {
+    public function __construct(private \Service\Api $api) {
 
-        $this->woocommerce = new Client(
-            'https://hedrix.cz',
-            'ck_b8e4527938494c881efbb28c813c2985e3f6e49a',
-            'cs_c94ecbbeb9d4045a864241b5f171785db32d4e61',
-            [
-                'version' => 'wc/v3',
-            ]
-        );
+
     }
     public function updateProducts() {
 
@@ -47,11 +39,11 @@ class UpdateMetaData {
            ];
             $allUpdatedProducts['update'][] = $updatedProduct;
         }
-         $this->postApi('products/batch' ,$allUpdatedProducts);
+         $this->api->postApi('products/batch' ,$allUpdatedProducts);
         return $allUpdatedProducts;
     }
     public function getProductVariations($productId) : array {
-       return $this->getApi('products/'. $productId . '/variations');
+       return $this->api->getApi('products/'. $productId . '/variations');
     }
 
     public function handleVariations($productId,$allVariations,$parentSKU,$productType,$manuColor) {
@@ -77,7 +69,7 @@ class UpdateMetaData {
             $allUpdatedVariations['update'][] = $updatedVariation;
 //            $this->putApi('products/' . $productId . '/variations/' . $variation->id . '/batch' ,$updatedVariation);
         }
-        $this->postApi('products/' . $productId . '/variations/batch' ,$allUpdatedVariations);
+        $this->api->postApi('products/' . $productId . '/variations/batch' ,$allUpdatedVariations);
 
         return $updatedVariation;
     }
@@ -212,27 +204,9 @@ class UpdateMetaData {
     }
 
     public function getProducts() {
-        return $this->getApi('products/?&after=2024-07-07T00:00:00&page=' . 10 . '&per_page=20&tag=1700');
+        return $this->api->getApi('products/?&after=2024-07-07T00:00:00&page=' . 10 . '&per_page=20&tag=1700');
     }
 
-    public function getApi($url) {
-        try {
-            $results = $this->woocommerce->get($url);
-            return $results;
-        } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
-        }
-    }
-    public function postApi($url, $data) {
-//        print_r( $data );
-        try {
-            $results = $this->woocommerce->post($url, $data);
-            print_r($results);
-            return $results;
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-            die();
-            return ['error' => $e->getMessage()];
-        }
-    }
+
+
 }
